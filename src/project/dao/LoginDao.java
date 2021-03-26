@@ -33,6 +33,32 @@ public class LoginDao {
 		}
 		return status;
 	}
+	public String validatePost(Login login) throws ClassNotFoundException {
+		String LOGIN_SQL = "SELECT users.post FROM users WHERE users.username = ? and users.password = ? ";
+
+		Class.forName("com.mysql.jdbc.Driver");
+		String status = null;
+		try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/AysomoDB", "root", "");
+
+				// Step 2:Create a statement using connection object
+				PreparedStatement preparedStatement = connection.prepareStatement(LOGIN_SQL)) {
+			preparedStatement.setString(1, login.getUsername());
+			preparedStatement.setString(2, login.getPassword());
+
+			System.out.println(preparedStatement);
+			// Step 3: Execute the query or update query
+			ResultSet result = preparedStatement.executeQuery();
+			if(result.next()){
+				status = result.getString(1);
+	        }
+			
+
+		} catch (SQLException e) {
+			// process sql exception
+			printSQLException(e);
+		}
+		return status;
+	}
 
 	private void printSQLException(SQLException ex) {
 		for (Throwable e : ex) {

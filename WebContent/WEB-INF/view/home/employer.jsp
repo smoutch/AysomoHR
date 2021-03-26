@@ -14,7 +14,10 @@ table, th, td {
 </style>
 </head>
 <body>
-	<h4>Connected as :</h4>
+	<h4>Manager</h4>
+	<c:if test="${ !empty sessionScope.username }">
+		<p>${ sessionScope.username }</p>
+	</c:if>
 	<div align="center">
 		<table>
 			<tr>

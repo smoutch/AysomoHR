@@ -45,13 +45,22 @@ public class LoginServlet extends HttpServlet {
 
 		try {
 			if (loginDao.validateLogin(login)) {
-				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/view/home/employee.jsp");
-				dispatcher.forward(request, response);
-			} else {
 				HttpSession session = request.getSession();
-				// session.setAttribute("user", username);
+				session.setAttribute("username", login.getUsername());
+				if (loginDao.validatePost(login).equals("ee")) {
+					response.sendRedirect(request.getContextPath()+"/employee");
+					//RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/view/home/employee.jsp");
+					//dispatcher.forward(request, response);
+				} else {
+
+					response.sendRedirect(request.getContextPath()+"/employer");
+					//RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/view/home/employer.jsp");
+					//dispatcher.forward(request, response);
+				}
+
+			} else {
 				System.out.println("Faux !!!");
-				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/view/home/employer.jsp");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/view/login/login.jsp");
 				dispatcher.forward(request, response);
 			}
 		} catch (ClassNotFoundException e) {
