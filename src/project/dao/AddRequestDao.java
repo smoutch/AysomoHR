@@ -14,7 +14,7 @@ import project.model.NewRequest;
 
 public class AddRequestDao {
 	public void addRequest(NewRequest request, String username) throws ClassNotFoundException {
-		String LOGIN_SQL = "INSERT INTO `request`(`startDate`, `endDate`, `reason`, `state`, `idEmployee`) VALUES (?,?,?,?,(select users.id from users where users.username = ?))";
+		String LOGIN_SQL = "INSERT INTO `request`(`startDate`, `endDate`, `reason`, `state`, `idEmployee`, `idEmployer` ) VALUES (?,?,?,?,(select users.id from users where users.username = ?),(select users.idEmployer from users where users.username = ?))";
 
 		Class.forName("com.mysql.jdbc.Driver");
 		try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/AysomoDB", "root", "");
@@ -26,6 +26,7 @@ public class AddRequestDao {
 			preparedStatement.setString(3, request.getReason());
 			preparedStatement.setString(4, "Wait");
 			preparedStatement.setString(5, username);
+			preparedStatement.setString(6, username);
 
 			System.out.println(preparedStatement);
 			// Step 3: Execute the query or update query

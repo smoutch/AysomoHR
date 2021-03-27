@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@ page import="java.util.ArrayList"%>
+<%@ page import="project.model.NewRequest"%>
+
+<%!ArrayList<NewRequest> requests = new ArrayList<NewRequest>();%>
+
 
 <!DOCTYPE html>
 <html>
@@ -9,16 +14,17 @@
 <style>
 table, th, td {
 	border: 1px solid black;
-	border-collapse: collapse;
 }
 </style>
 </head>
 <body>
 
 	<h4>Employee</h4>
-	<c:if test="${ !empty sessionScope.username }">
-		<p>${ sessionScope.username }</p>
-	</c:if>
+	<%
+	if (session.getAttribute("username") != null) {
+	%>
+	<p><%=session.getAttribute("username")%></p>
+	<%}%>
 	<div align="center">
 		<table>
 			<tr>
@@ -28,21 +34,28 @@ table, th, td {
 				<th>Stat</th>
 			</tr>
 			<tr>
-				<td>02-02-2021</td>
-				<td>02-02-2021</td>
-				<td>Vacation</td>
-				<td>Valide</td>
+				<%
+				// retrieve your list from the request, with casting 
+				ArrayList<NewRequest> requests = (ArrayList<NewRequest>) request.getAttribute("requests");
+				
+				if (requests != null) {
+				// print the information about every category of the list
+				for (NewRequest newRequest : requests) {
+				%>
+				<td><%=newRequest.getStartDate()%></td>
+				<td><%=newRequest.getEndDate()%></td>
+				<td><%=newRequest.getReason()%></td>
+				<td><%=newRequest.getState()%></td>
 				<td><input type="button" name="modify" value="Modify" /></td>
 				<td><input type="button" name="delete" value="Delete" /></td>
 			</tr>
-			<tr>
-				<td>02-02-2021</td>
-				<td>02-02-2021</td>
-				<td>Vacation</td>
-				<td>Valide</td>
-				<td><input type="button" name="modify" value="Modify" /></td>
-				<td><input type="button" name="delete" value="Delete" /></td>
-			</tr>
+			<%
+			}}
+				else {
+					%>
+					<p> La liste est vide </p>
+					<%} %>
+			
 		</table>
 		<h2>Add a new request</h2>
 		<form action="./addrequest" method="post">
