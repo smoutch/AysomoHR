@@ -80,9 +80,9 @@ public class AddRequest extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		response.sendRedirect(request.getContextPath() + "/employee");
-		// RequestDispatcher dispatcher = request.getRequestDispatcher("/employee");
-		// dispatcher.forward(request, response);
+		//response.sendRedirect(request.getContextPath() + "/employee");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/employee");
+		dispatcher.forward(request, response);
 	}
 
 }

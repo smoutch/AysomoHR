@@ -1,6 +1,7 @@
 package project.model;
 
 public class NewRequest {
+	private int id;
 	private String username;
 	private String startDate;
 	private String endDate;
@@ -45,6 +46,14 @@ public class NewRequest {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 }
