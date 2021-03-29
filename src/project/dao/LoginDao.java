@@ -15,7 +15,7 @@ public class LoginDao {
 
 		Class.forName("com.mysql.jdbc.Driver");
 		boolean status = false;
-		try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/AysomoDB", "root", "");
+		try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/AysomoDB?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
 
 				// Step 2:Create a statement using connection object
 				PreparedStatement preparedStatement = connection.prepareStatement(LOGIN_SQL)) {
@@ -38,7 +38,7 @@ public class LoginDao {
 
 		Class.forName("com.mysql.jdbc.Driver");
 		String status = null;
-		try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/AysomoDB", "root", "");
+		try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/AysomoDB?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
 
 				// Step 2:Create a statement using connection object
 				PreparedStatement preparedStatement = connection.prepareStatement(LOGIN_SQL)) {

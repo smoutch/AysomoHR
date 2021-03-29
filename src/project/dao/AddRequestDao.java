@@ -17,8 +17,7 @@ public class AddRequestDao {
 		String LOGIN_SQL = "INSERT INTO `request`(`startDate`, `endDate`, `reason`, `state`, `idEmployee`, `idEmployer` ) VALUES (?,?,?,?,(select users.id from users where users.username = ?),(select users.idEmployer from users where users.username = ?))";
 
 		Class.forName("com.mysql.jdbc.Driver");
-		try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/AysomoDB", "root", "");
-
+		try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/AysomoDB?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
 				// Step 2:Create a statement using connection object
 				PreparedStatement preparedStatement = connection.prepareStatement(LOGIN_SQL)) {
 			preparedStatement.setString(1, request.getStartDate());

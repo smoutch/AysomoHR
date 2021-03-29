@@ -13,28 +13,37 @@
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
 <style>
-table, th, td {
-	border: 1px solid black;
-	border-collapse: collapse;
+* {
+	padding: 10px 50px;
 }
 </style>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+	crossorigin="anonymous">
 </head>
 <body>
-
-	<h4>Employee</h4>
-	<%
-	if (session.getAttribute("username") != null) {
-	%>
-	<p><%=session.getAttribute("username")%></p>
-	<%}%>
+	<nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+		<!-- Navbar content -->
+		<h4>AysomoHR</h4>
+		<%
+		if (session.getAttribute("username") != null) {
+		%>
+		<p>
+			Employee (<%=session.getAttribute("username")%>)
+		</p>
+		<a class="btn btn-outline-danger" href="logout" />Logout </a>
+		<%}%>
+	</nav>
 	<div align="center">
 		<%
-			// retrieve your list from the request, with casting 
-			NewRequest newRequest = (NewRequest) request.getAttribute("request");
-			%>
+		// retrieve your list from the request, with casting 
+		NewRequest newRequest = (NewRequest) request.getAttribute("request");
+		%>
 		<h2>Edit request</h2>
 		<form action="./edit" method="post">
-			<table style="with: 100%">
+			<table class="table">
 				<tr>
 					<td>Id</td>
 					<td>Start Date</td>
@@ -45,15 +54,18 @@ table, th, td {
 				<tr>
 					<td><%=newRequest.getId()%></td>
 					<input type="hidden" name="id" value="<%=newRequest.getId()%>" />
-					<td><input type="date" name="startDate" value="<%=newRequest.getStartDate()%>" /></td>
-					<td><input type="date" name="endDate" value="<%=newRequest.getEndDate()%>" /></td>
-					<td><input type="text" name="reason" value="<%=newRequest.getReason()%>" /></td>
+					<td><input type="date" name="startDate"
+						value="<%=newRequest.getStartDate()%>" /></td>
+					<td><input type="date" name="endDate"
+						value="<%=newRequest.getEndDate()%>" /></td>
+					<td><input type="text" name="reason"
+						value="<%=newRequest.getReason()%>" /></td>
 				</tr>
 
 
 
 			</table>
-			<input type="submit" value="Add" />
+			<input class="btn btn-outline-success" type="submit" value="Edit" />
 		</form>
 	</div>
 </body>

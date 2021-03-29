@@ -12,9 +12,7 @@ public class DeleteRequestDao {
 		String LOGIN_SQL = "DELETE FROM `request` WHERE request.id = ?";
 
 		Class.forName("com.mysql.jdbc.Driver");
-		try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/AysomoDB", "root", "");
-
-				// Step 2:Create a statement using connection object
+		try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/AysomoDB?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
 				PreparedStatement preparedStatement = connection.prepareStatement(LOGIN_SQL)) {
 			preparedStatement.setInt(1, id);
 			System.out.println(preparedStatement);
