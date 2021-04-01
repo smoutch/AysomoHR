@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import project.dao.GetRequestDao;
+import project.dao.RequestDao;
 import project.model.NewRequest;
 
 /**
@@ -20,6 +20,13 @@ import project.model.NewRequest;
 @WebServlet("/employee")
 public class EmployeeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private NewRequest newRequest;
+	private RequestDao requestDao;
+
+	public void init() {
+		requestDao = new RequestDao();
+		newRequest = new NewRequest();
+	}
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -35,9 +42,16 @@ public class EmployeeServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-		
+		HttpSession session = request.getSession();
+		String username = (String) session.getAttribute("username");
+		try {
+			requestDao.addRequest(newRequest, username);
+			ArrayList<NewRequest> requests = requestDao.getRequests(username);
+			request.setAttribute("requests", requests);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/view/home/employee.jsp");
 		dispatcher.forward(request, response);
 	}

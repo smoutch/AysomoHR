@@ -30,13 +30,20 @@
 		<p>
 			Manager (<%=session.getAttribute("username")%>)
 		</p>
-		<a class="btn btn-outline-danger" href="logout" />Logout </a>
+		<a class="btn btn-danger" href="logout" />Logout </a>
 		<%}%>
 	</nav>
 
 	<div align="center">
+		<%
+		// retrieve your list from the request, with casting 
+		ArrayList<NewRequest> requests = (ArrayList<NewRequest>) request.getAttribute("requests");
+		if (requests != null) {
+			// print the information about every category of the list
+			if (requests.size() > 0) {
+		%>
 		<table class="table">
-			<tr >
+			<tr>
 				<th>Id</th>
 				<th>Username</th>
 				<th>Start</th>
@@ -45,31 +52,48 @@
 				<th>State</th>
 				<th>Accept</th>
 				<th>Refuse</th>
-				<%
-				// retrieve your list from the request, with casting 
-				ArrayList<NewRequest> requests = (ArrayList<NewRequest>) request.getAttribute("requests");
-				if (requests != null) {
-					// print the information about every category of the list
-					for (NewRequest newRequest : requests) {
-				%>
+
 			</tr>
-				<tr>
+			<%
+			for (NewRequest newRequest : requests) {
+				if (newRequest.getState().equals("Refused")) {
+			%>
+			<tr class="table-danger">
+				<%
+				} else if (newRequest.getState().equals("Accepted")) {
+				%>
+			
+			<tr class="table-success">
+				<%
+				} else {
+				%>
+			
+			<tr>
+				<%
+				}
+				%>
 				<td><%=newRequest.getId()%></td>
 				<td><%=newRequest.getUsername()%></td>
 				<td><%=newRequest.getStartDate()%></td>
 				<td><%=newRequest.getEndDate()%></td>
 				<td><%=newRequest.getReason()%></td>
 				<td><%=newRequest.getState()%></td>
-				<td><a class="btn btn-outline-success"
+				<td><a class="btn btn-success"
 					href="accept?id=<c:out value='<%=newRequest.getId()%>' />">Accept</a></td>
-				<td><a class="btn btn-outline-danger"
+				<td><a class="btn btn-danger"
 					href="refuse?id=<c:out value='<%=newRequest.getId()%>' />">Refuse</a></td>
 			</tr>
 			<%
 			}
 			} else {
 			%>
-			<p>La liste est vide</p>
+			<p>Empty !!</p>
+			<%
+			}
+
+			} else {
+			%>
+			<p>Empty !!</p>
 			<%
 			}
 			%>

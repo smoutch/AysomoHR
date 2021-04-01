@@ -2,18 +2,13 @@ package project.controler;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import project.dao.DeleteRequestDao;
-import project.dao.GetRequestDao;
-import project.dao.LoginDao;
+import project.dao.RequestDao;
 import project.model.NewRequest;
 
 /**
@@ -22,13 +17,11 @@ import project.model.NewRequest;
 @WebServlet("/delete")
 public class DeleteRequest extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private DeleteRequestDao deleteRequestDao;
-	private GetRequestDao getRequestDao;
 	ArrayList<NewRequest> requests;
+	private RequestDao requestDao;
 
 	public void init() {
-		deleteRequestDao = new DeleteRequestDao();
-		getRequestDao = new GetRequestDao ();
+		requestDao = new RequestDao();
 	}
 
 	/**
@@ -53,15 +46,12 @@ public class DeleteRequest extends HttpServlet {
 		String username = (String) session.getAttribute("username");
 		System.out.println(username);
 		try {
-			deleteRequestDao.deleteRequest(Integer.parseInt(id));
-			requests = getRequestDao.getRequests(username);
-			request.setAttribute("requests", requests);
+			requestDao.deleteRequest(Integer.parseInt(id));
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/employee");
-		dispatcher.forward(request, response);
+		response.sendRedirect(request.getContextPath() + "/employee");
 	}
 
 	/**

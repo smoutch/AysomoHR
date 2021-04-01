@@ -18,25 +18,27 @@
 </head>
 <body>
 
-	<div align="center" border-style =  "solid" >
-		<h3>Login into AysomoHR</h1>
-		<div class="mb-3">
-			<form action="./login" method="post">
-				<table style="with: 100%">
-					<tr>
-						<td>UserName</td>
-						<td><input class="form-control" type="text" name="username" /></td>
-					</tr>
-					<tr>
-						<td>Password</td>
-						<td><input class="form-control" type="password"
-							name="password" /></td>
-					</tr>
+	<div align="center" border-style="solid">
+		<h3>
+			Login into AysomoHR
+			</h1>
+			<div class="mb-3">
+				<form action="./login" method="post">
+					<table style="with: 100%">
+						<tr>
+							<td>UserName</td>
+							<td><input class="form-control" type="text" name="username" /></td>
+						</tr>
+						<tr>
+							<td>Password</td>
+							<td><input class="form-control" type="password"
+								name="password" /></td>
+						</tr>
 
-				</table>
-				<input class="btn btn-primary" type="submit" value="Submit" />
-			</form>
-		</div>
+					</table>
+					<input class="btn btn-primary" type="submit" value="Login" />
+				</form>
+			</div>
 	</div>
 </body>
 </html>

@@ -24,7 +24,8 @@
 	crossorigin="anonymous">
 </head>
 <body>
-	<nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+	<nav id="nav" class="navbar navbar-light"
+		style="background-color: #e3f2fd;">
 		<!-- Navbar content -->
 		<h4>AysomoHR</h4>
 		<%
@@ -33,7 +34,7 @@
 		<p>
 			Employee (<%=session.getAttribute("username")%>)
 		</p>
-		<a class="btn btn-outline-danger" href="logout" />Logout </a>
+		<a class="btn btn-danger" href="logout" />Logout </a>
 		<%}%>
 	</nav>
 
@@ -59,16 +60,30 @@
 			</tr>
 			<%
 			for (NewRequest newRequest : requests) {
+				if (newRequest.getState().equals("Refused")) {
 			%>
+			<tr class="table-danger">
+				<%
+				} else if (newRequest.getState().equals("Accepted")) {
+				%>
+			
+			<tr class="table-success">
+				<%
+				} else {
+				%>
+			
 			<tr>
+				<%
+				}
+				%>
 				<td><%=newRequest.getId()%></td>
 				<td><%=newRequest.getStartDate()%></td>
 				<td><%=newRequest.getEndDate()%></td>
 				<td><%=newRequest.getReason()%></td>
 				<td><%=newRequest.getState()%></td>
-				<td><a class="btn btn-outline-warning"
+				<td><a class="btn btn-warning"
 					href="edit?id=<c:out value='<%=newRequest.getId()%>'  />">Edit</a></td>
-				<td><a class="btn btn-outline-danger"
+				<td><a class="btn btn-danger"
 					href="delete?id=<c:out value='<%=newRequest.getId()%>' />">Delete</a></td>
 			</tr>
 			<%
@@ -103,7 +118,7 @@
 					</tr>
 
 				</table>
-				<input class="btn btn-outline-success" type="submit" value="Add" />
+				<input class="btn btn-success" type="submit" value="Add" />
 		</div>
 
 	</div>

@@ -1,20 +1,13 @@
 package project.controler;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import project.dao.AddRequestDao;
-import project.dao.GetRequestDao;
-import project.dao.LoginDao;
-import project.model.Login;
+import project.dao.RequestDao;
 import project.model.NewRequest;
 
 /**
@@ -23,12 +16,10 @@ import project.model.NewRequest;
 @WebServlet("/addrequest")
 public class AddRequest extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private AddRequestDao addRequestDao;
-	private GetRequestDao getRequestDao;
+	private RequestDao requestDao;
 
 	public void init() {
-		addRequestDao = new AddRequestDao();
-		getRequestDao = new GetRequestDao();
+		requestDao = new RequestDao();
 	}
 
 	/**
@@ -73,16 +64,12 @@ public class AddRequest extends HttpServlet {
 		String username = (String) session.getAttribute("username");
 
 		try {
-			addRequestDao.addRequest(newRequest, username);
-			ArrayList<NewRequest> requests = getRequestDao.getRequests(username);
-			request.setAttribute("requests", requests);
+			requestDao.addRequest(newRequest, username);
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//response.sendRedirect(request.getContextPath() + "/employee");
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/employee");
-		dispatcher.forward(request, response);
+		response.sendRedirect(request.getContextPath() + "/employee");
 	}
 
 }
